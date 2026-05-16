@@ -137,7 +137,8 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024
 # =============================================================
 # CORS — РАЗРЕШЕНИЕ КРОСС-ДОМЕННЫХ ЗАПРОСОВ
 # =============================================================
-CORS_ALLOW_ALL_ORIGINS = DEBUG        # в production указать конкретные домены
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")        # в production указать конкретные домены
 
 # =============================================================
 # DJANGO REST FRAMEWORK
