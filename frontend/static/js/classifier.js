@@ -111,7 +111,7 @@ async function performClassification() {
 
     try {
         // Отправляем POST-запрос на API
-        const response = await fetch("/api/v1/classify/", {
+        const response = await fetch("https://yemeni-dialect-api.onrender.com/api/v1/classify/", {
             method: "POST",
             body: formData,
             headers: {
