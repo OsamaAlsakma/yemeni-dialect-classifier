@@ -1,0 +1,66 @@
+{% load i18n static %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title|default:"Yemeni Dialect Classifier" }}</title>
+
+    <!-- Стили -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% if LANGUAGE_CODE == 'ar' %}
+        <link rel="stylesheet" href="{% static 'css/rtl.css' %}">
+    {% endif %}
+</head>
+<body>
+    <!-- ===== ШАПКА ===== -->
+    <header class="site-header">
+        <div class="container header-flex">
+            <a href="{% url 'classifier:home' %}" class="logo">
+                {% trans "Классификатор йеменских диалектов" %}
+            </a>
+
+            <nav class="main-nav">
+                <a href="{% url 'classifier:home' %}">{% trans "Главная" %}</a>
+                <a href="{% url 'classifier:about' %}">{% trans "О проекте" %}</a>
+            </nav>
+
+            <!-- Переключатель языков -->
+            <form action="{% url 'set_language' %}" method="post" class="lang-switcher">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <select name="language" onchange="this.form.submit()">
+                    {% get_available_languages as LANGUAGES %}
+                    {% for lang_code, lang_name in LANGUAGES %}
+                        <option value="{{ lang_code }}"
+                            {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                            {{ lang_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </header>
+
+    <!-- ===== ОСНОВНОЕ СОДЕРЖИМОЕ ===== -->
+    <main class="site-main">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- ===== ПОДВАЛ ===== -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>
+                {% trans "ВКР" %} &middot;
+                Альсакма О.С.М. &middot;
+                {% trans "Кафедра ВТ, СПбГЭТУ «ЛЭТИ»" %} &middot; 2026
+            </p>
+        </div>
+    </footer>
+
+    <!-- Скрипты -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,39 @@
+/* ============================================================
+   rtl.css — Стили для RTL (справа налево) при арабском языке
+   ============================================================ */
+
+body {
+    direction: rtl;
+}
+
+.result-card {
+    border-left: none;
+    border-right: 4px solid #1e3c72;
+}
+
+.error-panel {
+    border-left: none;
+    border-right: 4px solid #c0392b;
+}
+
+.file-info {
+    border-left: none;
+    border-right: 4px solid #1e3c72;
+}
+
+.top-n-item {
+    grid-template-columns: auto 1fr 30px;
+}
+
+.file-info .file-size {
+    margin-left: 0;
+    margin-right: 12px;
+}
+
+.top-n-pct {
+    text-align: left;
+}
+
+.main-nav {
+    flex-direction: row-reverse;
+}

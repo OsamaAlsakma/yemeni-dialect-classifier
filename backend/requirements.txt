@@ -1,0 +1,11 @@
+Django>=4.2.0,<5.1.0
+djangorestframework>=3.14.0
+django-cors-headers>=4.3.0
+whitenoise>=6.6.0
+gunicorn>=21.2.0
+tensorflow-cpu>=2.15.0
+numpy>=1.24.0
+scipy>=1.11.0
+librosa>=0.10.1
+soundfile>=0.12.1
+audioread>=3.0.0

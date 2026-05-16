@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="hero">
+    <h1>{% trans "Определите диалект по голосу" %}</h1>
+    <p class="subtitle">
+        {% trans "Загрузите аудиозапись или запишите голос — модель определит йеменский диалект из 11 возможных." %}
+    </p>
+</div>
+
+<!-- ===== ПАНЕЛЬ ВВОДА ===== -->
+<section class="input-panel">
+    <div class="input-tabs">
+        <button class="tab-btn active" data-tab="upload">
+            {% trans "📁 Загрузить файл" %}
+        </button>
+        <button class="tab-btn" data-tab="record">
+            {% trans "🎤 Записать голос" %}
+        </button>
+    </div>
+
+    <!-- Вкладка: загрузка файла -->
+    <div class="tab-content active" id="tab-upload">
+        <div class="drop-zone" id="dropZone">
+            <p class="drop-text">
+                {% trans "Перетащите аудиофайл сюда" %}
+            </p>
+            <p class="drop-hint">
+                {% trans "или нажмите для выбора" %}
+                <br>
+                <small>WAV, MP3, FLAC, OGG, WEBM, M4A — {% trans "до 25 МБ" %}</small>
+            </p>
+            <input type="file" id="fileInput" accept="audio/*" hidden>
+        </div>
+        <div class="file-info" id="fileInfo" style="display:none;">
+            <span class="file-name"></span>
+            <span class="file-size"></span>
+        </div>
+    </div>
+
+    <!-- Вкладка: запись с микрофона -->
+    <div class="tab-content" id="tab-record">
+        <div class="recorder">
+            <button class="record-btn" id="recordBtn">
+                <span class="record-icon">●</span>
+                <span class="record-label">{% trans "Начать запись" %}</span>
+            </button>
+            <div class="record-status" id="recordStatus"></div>
+            <audio id="recordedAudio" controls style="display:none;"></audio>
+        </div>
+    </div>
+
+    <!-- Кнопка классификации -->
+    <div class="action-row">
+        <button class="btn-primary" id="classifyBtn" disabled>
+            {% trans "🔍 Классифицировать" %}
+        </button>
+    </div>
+</section>
+
+<!-- ===== ИНДИКАТОР ЗАГРУЗКИ ===== -->
+<div class="loading" id="loading" style="display:none;">
+    <div class="spinner"></div>
+    <p>{% trans "Анализируем аудио..." %}</p>
+</div>
+
+<!-- ===== РЕЗУЛЬТАТЫ ===== -->
+<section class="results" id="results" style="display:none;">
+    <h2>{% trans "Результат классификации" %}</h2>
+
+    <!-- Главный результат -->
+    <div class="result-main">
+        <div class="result-card">
+            <div class="result-label">{% trans "Диалект:" %}</div>
+            <div class="result-value dialect-name" id="topDialect"></div>
+        </div>
+        <div class="result-card">
+            <div class="result-label">{% trans "Регион:" %}</div>
+            <div class="result-value" id="topRegion"></div>
+        </div>
+        <div class="result-card">
+            <div class="result-label">{% trans "Уверенность:" %}</div>
+            <div class="result-value confidence" id="topConfidence"></div>
+        </div>
+    </div>
+
+    <!-- Top-3 -->
+    <h3>{% trans "Top-3 наиболее вероятных диалектов" %}</h3>
+    <div class="top-n-list" id="topNList"></div>
+
+    <!-- Дополнительная информация -->
+    <div class="extra-info">
+        <p>
+            <strong>{% trans "Использованная модель:" %}</strong>
+            <span id="modelUsed"></span>
+        </p>
+    </div>
+</section>
+
+<!-- ===== ПАНЕЛЬ ОШИБОК ===== -->
+<div class="error-panel" id="errorPanel" style="display:none;">
+    <strong>{% trans "Ошибка:" %}</strong>
+    <span id="errorMessage"></span>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/recorder.js' %}"></script>
+<script src="{% static 'js/classifier.js' %}"></script>
+{% endblock %}

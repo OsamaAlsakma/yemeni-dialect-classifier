@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="about-page">
+    <h1>{% trans "О проекте" %}</h1>
+
+    <section class="about-section">
+        <h2>{% trans "Описание" %}</h2>
+        <p>
+            {% trans "Система автоматической классификации йеменских диалектов на основе анализа аудиосигналов с применением методов глубокого обучения." %}
+        </p>
+        <p>
+            {% trans "Проект является частью выпускной квалификационной работы студента кафедры ВТ СПбГЭТУ «ЛЭТИ»." %}
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h2>{% trans "Статистика датасета" %}</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">{{ dataset_stats.total }}</div>
+                <div class="stat-label">{% trans "Всего записей" %}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ dataset_stats.train }}</div>
+                <div class="stat-label">{% trans "Обучающая выборка" %}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ dataset_stats.validate }}</div>
+                <div class="stat-label">{% trans "Валидационная выборка" %}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ dataset_stats.test }}</div>
+                <div class="stat-label">{% trans "Тестовая выборка" %}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ dataset_stats.dialects }}</div>
+                <div class="stat-label">{% trans "Диалектов" %}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ dataset_stats.samples }}</div>
+                <div class="stat-label">{% trans "Уникальных фраз" %}</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <h2>{% trans "Используемые модели" %}</h2>
+        <ul class="model-list">
+            <li><strong>CNN</strong> — {% trans "свёрточная нейронная сеть для обработки мел-спектрограмм" %}</li>
+            <li><strong>LSTM</strong> — {% trans "рекуррентная сеть с механизмом внимания" %}</li>
+            <li><strong>CNN + LSTM</strong> — {% trans "гибридная архитектура (используется по умолчанию)" %}</li>
+        </ul>
+    </section>
+
+    <section class="about-section">
+        <h2>{% trans "Авторы" %}</h2>
+        <p>
+            <strong>{% trans "Автор:" %}</strong>
+            Альсакма Осама Салех Мохаммед, {% trans "группа 2310" %}
+        </p>
+        <p>
+            <strong>{% trans "Научный руководитель:" %}</strong>
+            к.т.н., доц. Аббас Саддам Ахмед Мохаммед
+        </p>
+        <p>
+            <strong>{% trans "Кафедра:" %}</strong>
+            {% trans "Вычислительная техника, СПбГЭТУ «ЛЭТИ»" %}
+        </p>
+    </section>
+</div>
+{% endblock %}
